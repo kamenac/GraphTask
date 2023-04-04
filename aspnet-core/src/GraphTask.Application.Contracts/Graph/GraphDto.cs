@@ -10,5 +10,11 @@ namespace GraphTask.Graph
     {
         public string Name { get; set; }
 
+        public double AverageNumberOfAdjacentNodes { get; set; }
+
+        public int NumberOfNodes { get; set; }
+
+        public List<EdgeDto> Edges { get; set; } = new List<EdgeDto>();
+
     }
 }

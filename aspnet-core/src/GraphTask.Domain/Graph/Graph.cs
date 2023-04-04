@@ -24,19 +24,15 @@ namespace GraphTask.Graph
 
         private List<int> Nodes { get; set; }
 
+        public double AverageNumberOfAdjacentNodes { get; set; }
+
+        public int NumberOfNodes { get; set; }
+
         public List<Edge> Edges { get; set; }
 
         [Required]
         [StringLength(128)]
         public string Name { get; set; }
-
-        public int NumberOfNodes
-        {
-            get
-            {
-                return Nodes.Count;
-            }
-        }
 
         private Tuple<int, int> ParseEdgeString(string input)
         {
@@ -56,7 +52,7 @@ namespace GraphTask.Graph
 
         public void AddEdge(int from, int to)
         {
-            Edges.Add(new Edge(from, to));
+            Edges.Add(new Edge(from, to) { GraphId = this.Id }); // need to manually set GraphId, we don't track dependency on the Graph object
 
             if (!Nodes.Contains(from))
             {
@@ -69,7 +65,7 @@ namespace GraphTask.Graph
             }
         }
 
-        public double GetAverageNumberOfAdjacentConnections()
+        public double GetAverageNumberOfAdjacentNodes()
         {
             var countList = new List<int>();
 
@@ -87,13 +83,18 @@ namespace GraphTask.Graph
 
             foreach (var edge in Edges)
             {
-                if (edge.HasNode(fromNode))
+                if (edge.ContainsNode(fromNode))
                 {
                     count++;
                 }
             }
 
             return count;
+        }
+
+        public int GetNumberOfNodes()
+        {
+            return Nodes.Count;
         }
     }
 }

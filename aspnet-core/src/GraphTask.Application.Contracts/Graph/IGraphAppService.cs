@@ -19,6 +19,13 @@ namespace GraphTask.Graph
         /// </summary>
         /// <param name="input">CreateGraphDto</param>
         /// <returns>Graph entity id</returns>
-        Task<int> CreateGraphAsync(CreateGraphDto input);
+        Task<int> CreateWholeGraphAsync(CreateGraphDto input);
+
+        /// <summary>
+        /// Returns graph with all the edges
+        /// </summary>
+        /// <param name="id">graph id</param>
+        /// <returns>GraphDto</returns>
+        Task<GraphDto> GetWholeGraphAsync(int id);
     }
 }

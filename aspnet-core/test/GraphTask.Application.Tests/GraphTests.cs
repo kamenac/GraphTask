@@ -36,7 +36,7 @@ namespace GraphTask
             IGraphAppService graphService = GetRequiredService<IGraphAppService>();
             var createDatasetDto = PrepareCreateGraphDto("first dataset", "0 42");
 
-            var id = await graphService.CreateGraphAsync(createDatasetDto);
+            var id = await graphService.CreateWholeGraphAsync(createDatasetDto);
         }
     }
 }
