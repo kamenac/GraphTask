@@ -6,7 +6,8 @@ namespace GraphTask;
 
 [DependsOn(
     typeof(GraphTaskApplicationModule),
-    typeof(GraphTaskDomainTestModule)
+    typeof(GraphTaskDomainTestModule),
+    typeof(GraphTaskApplicationContractsModule)
     )]
 public class GraphTaskApplicationTestModule : AbpModule
 {

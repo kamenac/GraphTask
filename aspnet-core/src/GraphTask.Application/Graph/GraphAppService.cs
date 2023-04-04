@@ -33,14 +33,19 @@ namespace GraphTask.Graph
             IRepository<Graph, int> _graphRepository,
             IEdgeRepository _edgeRepository,
             IUnitOfWorkManager _unitOfWorkManager
-            )
+        )
         : base(_graphRepository)
         {
             edgeRepository = _edgeRepository;
             unitOfWorkManager = _unitOfWorkManager;
         }
 
-        private List<string> ConvertFileToEdgeStringInputList(IRemoteStreamContent fileStream)
+        /// <summary>
+        /// converts an input file into list of strings, split by new-line character
+        /// </summary>
+        /// <param name="fileStream"></param>
+        /// <returns>list of strings</returns>
+        private List<string> ConvertFileToStringList(IRemoteStreamContent fileStream)
         {
             using var reader = new StreamReader(fileStream.GetStream());
             string inputData = reader.ReadToEnd();
@@ -62,7 +67,7 @@ namespace GraphTask.Graph
                     inserted = await this.Repository.InsertAsync(graph, autoSave: true);
                 }
 
-                foreach (var inputString in ConvertFileToEdgeStringInputList(input.Content))
+                foreach (var inputString in ConvertFileToStringList(input.Content))
                 {
                     inserted.AddEdge(inputString);
                 }
@@ -90,12 +95,12 @@ namespace GraphTask.Graph
             //var graphQuery = await this.Repository.GetQueryableAsync();
             //var graph = graphQuery.Where(x => x.Id == id).FirstOrDefault();
 
+            // todo: ^^ find out how the new ABP repository returns related items
+
             var graph = await Repository.GetAsync(id);
             var edgeTuples = await edgeRepository.GetListByGraphIdAsync(id);
 
             var dto = this.MapToGetOutputDto(graph);
-
-            //var dto = new GraphDto();
 
             foreach (var tuple in edgeTuples)
             {
