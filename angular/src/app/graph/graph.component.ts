@@ -1,8 +1,9 @@
 import { ListService, PagedResultDto } from '@abp/ng.core';
 import { Component, OnInit } from '@angular/core';
 import { GraphService } from '@proxy/graph';
-import { GraphDto } from '@proxy/graph/models';
+import { GraphDto, CreateGraphDto } from '@proxy/graph/models';
 import { FormGroup, FormBuilder, FormsModule, Validators } from '@angular/forms';
+import { GraphUploadService } from '../services/GraphUploadService';
 
 
 @Component({
@@ -15,10 +16,12 @@ export class GraphComponent implements OnInit {
   dataset = { items: [], totalCount: 0 } as PagedResultDto<GraphDto>;
   isModalOpen = false;
   form: FormGroup;
+  fileToUpload: File;
 
   constructor(
     public readonly list: ListService,
     private graphService: GraphService,
+    private graphUploadService: GraphUploadService,
     private fb: FormBuilder // inject FormBuilder
   ) {
   }
@@ -48,12 +51,19 @@ export class GraphComponent implements OnInit {
     alert(detail.id);
   }
 
+  handleFileInput(files: FileList) {
+    this.fileToUpload = files.item(0);
+  }
+
   save() {
     if (this.form.invalid) {
       return;
     }
 
-    this.graphService.createWholeGraph(this.form.value).subscribe(() => {
+    let formData: FormData = new FormData();
+    formData.append('content', this.fileToUpload, this.fileToUpload.name);
+
+    this.graphUploadService.createWholeGraph(this.form.value["name"], formData).subscribe(() => {
       this.isModalOpen = false;
       this.form.reset();
       this.list.get();

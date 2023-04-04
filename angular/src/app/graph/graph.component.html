@@ -47,7 +47,7 @@
                 <label for="book-name">Name</label><span> * </span>
                 <input type="text" id="dataset-name" class="form-control" formControlName="name" autofocus />
 
-                <input type="file" id="dataset-content" class="form-control" formControlName="content" autofocus />
+                <input type="file" id="dataset-content" class="form-control" formControlName="content" autofocus (change)="handleFileInput($event.target.files)" />
             </div>
         </form>
 

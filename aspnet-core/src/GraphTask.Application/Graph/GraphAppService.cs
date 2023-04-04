@@ -1,4 +1,5 @@
 ﻿using Abp.UI;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -41,7 +42,7 @@ namespace GraphTask.Graph
 
         private List<string> ConvertFileToEdgeStringInputList(IRemoteStreamContent fileStream)
         {
-            StreamReader reader = new StreamReader(fileStream.GetStream());
+            using var reader = new StreamReader(fileStream.GetStream());
             string inputData = reader.ReadToEnd();
 
             return inputData.Split("\n", StringSplitOptions.RemoveEmptyEntries).ToList();
