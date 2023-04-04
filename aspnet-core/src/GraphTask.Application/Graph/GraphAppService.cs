@@ -98,7 +98,7 @@ namespace GraphTask.Graph
             // todo: ^^ find out how the new ABP repository returns related items
 
             var graph = await Repository.GetAsync(id);
-            var edgeTuples = await edgeRepository.GetListByGraphIdAsync(id);
+            var edgeTuples = await edgeRepository.GetListByGraphIdAsync(id); // constructing the DTO in steps, for speed reasons
 
             var dto = this.MapToGetOutputDto(graph);
 
