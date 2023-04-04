@@ -7,8 +7,8 @@ export interface CreateGraphDto {
 }
 
 export interface EdgeDto {
-  endNode: number;
-  startNode: number;
+  end: number;
+  start: number;
 }
 
 export interface GraphDto extends AuditedEntityDto<number> {
@@ -16,4 +16,5 @@ export interface GraphDto extends AuditedEntityDto<number> {
   averageNumberOfAdjacentNodes: number;
   numberOfNodes: number;
   edges: EdgeDto[];
+  nodes: number[];
 }

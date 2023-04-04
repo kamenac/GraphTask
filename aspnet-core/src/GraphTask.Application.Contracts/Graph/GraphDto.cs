@@ -16,5 +16,7 @@ namespace GraphTask.Graph
 
         public List<EdgeDto> Edges { get; set; } = new List<EdgeDto>();
 
+        public List<int> Nodes { get; set; } = new List<int>();
+
     }
 }

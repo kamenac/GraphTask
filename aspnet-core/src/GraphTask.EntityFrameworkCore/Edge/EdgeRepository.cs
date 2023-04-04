@@ -28,7 +28,10 @@ namespace GraphTask.Edge
             var dbContext = await GetDbContextAsync();
             dbContext.ChangeTracker.AutoDetectChangesEnabled = false;
 
-            return dbContext.Edges.Where(x => x.GraphId == graphId).Select(x => new Tuple<int, int>(x.StartNode, x.EndNode)).ToList();
+            return dbContext.Edges
+                .Where(x => x.GraphId == graphId)
+                .Select(x => new Tuple<int, int>(x.StartNode, x.EndNode))
+                .ToList();
         }
 
         public async Task InsertManyAsync(IList<Graph.Edge> edges)

@@ -7,13 +7,13 @@ namespace GraphTask.Graph
 {
     public class EdgeDto
     {
-        public int EndNode { get; set; }
+        public int End { get; set; }
 
-        public int StartNode { get; set; }
+        public int Start { get; set; }
 
         public bool ContainsNode(int node)
         {
-            return (StartNode == node || EndNode == node);
+            return (Start == node || End == node);
         }
     }
 }

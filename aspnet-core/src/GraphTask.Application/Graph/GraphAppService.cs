@@ -93,11 +93,23 @@ namespace GraphTask.Graph
             var graph = await Repository.GetAsync(id);
             var edgeTuples = await edgeRepository.GetListByGraphIdAsync(id);
 
-            var dto = new GraphDto();
+            var dto = this.MapToGetOutputDto(graph);
+
+            //var dto = new GraphDto();
 
             foreach (var tuple in edgeTuples)
             {
-                dto.Edges.Add(new EdgeDto { StartNode = tuple.Item1, EndNode = tuple.Item2 });
+                dto.Edges.Add(new EdgeDto { Start = tuple.Item1, End = tuple.Item2 });
+
+                if (!dto.Nodes.Contains(tuple.Item1))
+                {
+                    dto.Nodes.Add(tuple.Item1);
+                }
+
+                if (!dto.Nodes.Contains(tuple.Item2))
+                {
+                    dto.Nodes.Add(tuple.Item2);
+                }
             }
 
             return dto;
