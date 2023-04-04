@@ -12,6 +12,9 @@ using Volo.Abp.OpenIddict.EntityFrameworkCore;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using Volo.Abp.MultiTenancy;
+using Volo.Abp;
+using Microsoft.EntityFrameworkCore;
 
 namespace GraphTask.EntityFrameworkCore;
 
@@ -51,4 +54,24 @@ public class GraphTaskEntityFrameworkCoreModule : AbpModule
         });
 
     }
+
+    public override void OnPostApplicationInitialization(ApplicationInitializationContext context)
+    {
+        base.OnPostApplicationInitialization(context);
+
+        var dbContextProvider = context.ServiceProvider.GetRequiredService<IDbContextProvider<GraphTaskDbContext>>();
+        var unitOfWorkManager = context.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
+
+        using (var unitOfWork = unitOfWorkManager.Begin())
+        {
+            var dbContext = dbContextProvider.GetDbContext();
+
+            //Removes actual connection as it has been enlisted in a non needed transaction for migration
+            dbContext.Database.CloseConnection();
+            dbContext.Database.Migrate();
+        }
+    }
+
+    
 }
+
