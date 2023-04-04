@@ -1,0 +1,21 @@
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col col-md-6">
+                <h5 class="card-title">
+                    Dataset {{graphDetail?.id}}
+                </h5>
+            </div>
+            <div class="text-end col col-md-6">
+                <div class="text-lg-end pt-2">
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        Number of nodes: {{ graphDetail?.numberOfNodes }}
+        <br>
+        Average Number of adjacent nodes: {{ graphDetail.averageNumberOfAdjacentNodes.toFixed(2)}}
+    </div>
+</div>

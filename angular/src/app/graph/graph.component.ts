@@ -43,14 +43,17 @@ export class GraphComponent implements OnInit {
     });
   }
 
+  openDetail(detail: GraphDto) {
+    debugger;
+    alert(detail.id);
+  }
+
   save() {
     if (this.form.invalid) {
       return;
     }
 
-    debugger;
-
-    this.graphService.createGraph(this.form.value).subscribe(() => {
+    this.graphService.createWholeGraph(this.form.value).subscribe(() => {
       this.isModalOpen = false;
       this.form.reset();
       this.list.get();

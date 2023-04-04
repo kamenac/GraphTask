@@ -19,21 +19,14 @@ export class GraphService {
     { apiName: this.apiName });
   
 
-  createGraph = (input: CreateGraphDto) =>
+  createWholeGraph = (input: CreateGraphDto) =>
     this.restService.request<any, number>({
       method: 'POST',
-      url: '/api/app/graph/graph',
-      params: { name: input.name},
-      body: this.generateFormData(input);
+      url: '/api/app/graph/whole-graph',
+      params: { name: input.name },
     },
     { apiName: this.apiName });
   
-    private generateFormData(file: File) {
-      const formData = new FormData();
-      formData.append('file', file, file.name);
-      return formData;
-    }
-
 
   delete = (id: number) =>
     this.restService.request<any, void>({
@@ -56,6 +49,14 @@ export class GraphService {
       method: 'GET',
       url: '/api/app/graph',
       params: { sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+    },
+    { apiName: this.apiName });
+  
+
+  getWholeGraph = (id: number) =>
+    this.restService.request<any, GraphDto>({
+      method: 'GET',
+      url: `/api/app/graph/${id}/whole-graph`,
     },
     { apiName: this.apiName });
   
